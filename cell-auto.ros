@@ -13,9 +13,8 @@ exec ros -Q -- $0 "$@"
 (in-package :ros.script.cell-auto.3916312242)
 
 (defvar ~ROWS~ 400)
-(defvar ~RULE~ 102)
-(defvar ~PIXEL_WIDTH~ 2)
-(defvar ~PIXEL_HEIGHT~ 2)
+(defvar ~PIXEL-WIDTH~ 2)
+(defvar ~PIXEL-HEIGHT~ 2)
 
 (defun init (i rule-map rule) ;; to be called as (init 0 '() 102)
   (if (< i 8)
@@ -69,8 +68,8 @@ exec ros -Q -- $0 "$@"
                  do (if (= (second y) 1)
                         (cl-svg:draw scene (:rect :x (+ (- cols (* (first x) 2)) (* (first y) 2))
                                                   :y (* 2 (first x))
-                                                  :height ~PIXEL_HEIGHT~
-                                                  :width ~PIXEL_WIDTH~))
+                                                  :height ~PIXEL-HEIGHT~
+                                                  :width ~PIXEL-WIDTH~))
                         nil))))
 
 
@@ -82,11 +81,11 @@ exec ros -Q -- $0 "$@"
         (cols (length (get-last-element data))))
     (cl-svg:with-svg-to-file
         (scene 'cl-svg:svg-1.1-toplevel :height (* 2 rows) :width (* 2 cols))
-        (#p"rule102.svg" :if-exists :supersede)
+        (#p"rule.svg" :if-exists :supersede)
       (traverse data scene cols))))
 
-(defun main (&rest argv)
+(defun main (n &rest argv)
   (declare (ignorable argv))
-  (let ((data (generate ~ROWS~ ~RULE~ '((1)))))
+  (let ((data (generate ~ROWS~ (parse-integer n) '((1)))))
     (draw-svg-to-file data)))
 ;;; vim: set ft=lisp lisp:
