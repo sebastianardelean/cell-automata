@@ -5,6 +5,9 @@
 ;; blah blah blah.
 (defvar ~ROWS~ 400)
 (defvar ~RULE~ 102)
+(defvar ~PIXEL_WIDTH~ 2)
+(defvar ~PIXEL_HEIGHT~ 2)
+
 
 (defun init (i rule-map rule) ;; to be called as (init 0 '() 102)
   (if (< i 8)
@@ -56,10 +59,10 @@
   (loop for x in (enumerate data)
         do (loop for y in (enumerate (second x))
                  do (if (= (second y) 1)
-                        (cl-svg:draw scene (:rect :x (- cols (+ (* (first x) 2) (* (first y) 2)))
+                        (cl-svg:draw scene (:rect :x (+ (- cols (* (first x) 2)) (* (first y) 2))
                                                   :y (* 2 (first x))
-                                                  :height 2
-                                                  :width 2))
+                                                  :height ~PIXEL_HEIGHT~
+                                                  :width ~PIXEL_WIDTH~))
                         nil))))
 
 
